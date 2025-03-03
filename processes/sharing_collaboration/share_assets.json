@@ -1,0 +1,14 @@
+{
+  "title": "Share Assets",
+  "description": "How to share assets with team members or external users",
+  "keywords": ["share", "sharing", "collaborate", "send asset", "share link", "distribution"],
+  "steps": [
+    "Log in to the Brandworkz platform using your credentials",
+    "Select the asset(s) you want to share by checking the boxes next to them",
+    "Click on the 'Share' button in the top menu",
+    "Choose between sharing via email, generating a link, or adding to a shared collection",
+    "Set expiration date and permissions for the shared assets if applicable",
+    "Add a message for the recipients if sharing via email",
+    "Click 'Send' or 'Generate Link' to complete the sharing process"
+  ]
+} 

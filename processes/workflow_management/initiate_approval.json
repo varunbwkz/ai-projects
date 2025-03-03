@@ -1,0 +1,16 @@
+{
+  "title": "Initiate Approval Workflow",
+  "description": "How to start an approval workflow for assets in Brandworkz",
+  "keywords": ["approval", "workflow", "approve", "review", "initiate workflow", "get approval"],
+  "steps": [
+    "Log in to the Brandworkz platform using your credentials",
+    "Select the asset(s) that require approval",
+    "Click on 'Workflows' in the top menu",
+    "Select 'Approval Workflow' from the available options",
+    "Choose the appropriate approvers from your team",
+    "Add any specific instructions or comments for the approvers",
+    "Set deadlines if required",
+    "Click 'Submit for Approval' to initiate the workflow",
+    "Monitor the status of your approval request in the 'My Workflows' section"
+  ]
+}

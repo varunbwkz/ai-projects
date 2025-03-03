@@ -1,0 +1,15 @@
+{
+  "title": "Create a Collection",
+  "description": "How to create a new collection in Brandworkz",
+  "keywords": ["collection", "create collection", "new collection", "organize", "group assets"],
+  "steps": [
+    "Log in to the Brandworkz platform using your credentials",
+    "Click on 'Collections' in the main navigation",
+    "Click the 'Create New Collection' button",
+    "Enter a name and description for your collection",
+    "Set permissions and sharing options if needed",
+    "Click 'Create' to finish setting up the collection",
+    "Add assets to your collection by searching and selecting them",
+    "Save your changes"
+  ]
+} 

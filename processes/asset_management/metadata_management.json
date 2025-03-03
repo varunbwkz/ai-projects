@@ -1,0 +1,74 @@
+{
+  "title": "Managing Asset Metadata",
+  "description": "A comprehensive guide to creating, editing, and optimizing metadata for your digital assets and folders in Brandworkz",
+  "keywords": ["metadata", "tags", "keywords", "asset information", "edit metadata", "folders", "properties", "categorize", "taxonomy", "bulk edit", "metadata templates"],
+  "prerequisites": [
+    "Access to Brandworkz platform",
+    "Permission to create and edit asset metadata",
+    "Permission to create and edit folder metadata",
+    "Basic understanding of your organization's metadata schema"
+  ],
+  "sections": [
+    {
+      "name": "Understanding Metadata Fields",
+      "steps": [
+        "Log in to the Brandworkz platform using your credentials",
+        "Navigate to Admin > Metadata Management",
+        "Review the list of available metadata fields",
+        "Note the required fields that must be completed for each asset type"
+      ],
+      "notes": "Different asset types may have different metadata requirements. Make sure you're familiar with the specific fields for your content."
+    },
+    {
+      "name": "Adding Metadata to New Assets",
+      "steps": [
+        "Start the upload process for your asset",
+        "Complete all the required metadata fields marked with an asterisk (*)",
+        "Add values to optional fields that will help with searchability",
+        "Include keywords that describe the asset's content, purpose, and usage rights",
+        "Add any relevant taxonomies or categories",
+        "Complete the upload process"
+      ],
+      "tips": "Be thorough with keywords - think about how users might search for this asset."
+    },
+    {
+      "name": "Editing Metadata for Existing Assets",
+      "steps": [
+        "Search for and locate the asset you want to update",
+        "Select the asset to view its details",
+        "Click the 'Edit' or 'Edit Metadata' button",
+        "Make your changes to the metadata fields",
+        "Save your changes"
+      ],
+      "troubleshooting": [
+        "If you can't edit metadata, check your user permissions",
+        "If certain fields are greyed out, they may be system-controlled fields that cannot be edited",
+        "For required fields that have validation errors, ensure your input matches the expected format"
+      ]
+    },
+    {
+      "name": "Bulk Metadata Editing",
+      "steps": [
+        "Search for or browse to find multiple assets that need the same metadata updates",
+        "Select all relevant assets by checking the boxes next to them",
+        "Click the 'Bulk Edit' or 'Edit Metadata' option from the actions menu",
+        "Select which metadata fields you want to update across all selected assets",
+        "Enter the new values for these fields",
+        "Confirm and save your changes"
+      ],
+      "notes": "Bulk editing is powerful but use with caution as it will overwrite existing values for all selected assets."
+    },
+    {
+      "name": "Creating Metadata Templates",
+      "steps": [
+        "Navigate to Admin > Metadata Templates",
+        "Click 'Create New Template'",
+        "Give your template a descriptive name",
+        "Select which asset types this template applies to",
+        "Pre-fill the metadata fields that should be applied automatically",
+        "Save your template"
+      ],
+      "tips": "Templates are great for assets that share common metadata like campaign names, usage rights, or expiration dates."
+    }
+  ]
+}

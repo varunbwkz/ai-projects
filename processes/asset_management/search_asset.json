@@ -1,0 +1,38 @@
+{
+  "title": "Search for Assets",
+  "description": "Detailed steps on how to effectively search for assets within the Brandworkz platform.",
+  "keywords": [
+    "search",
+    "searching",
+    "find asset",
+    "locate",
+    "search assets",
+    "find"
+  ],
+  "steps": [
+    {
+      "step": "Log in to the Brandworkz platform using your credentials",
+      "detail": "Open your preferred web browser and enter the URL for the Brandworkz platform. Use your assigned username and password to log in. If you do not remember your password, use the 'Forgot Password' link to reset it."
+    },
+    {
+      "step": "Use the search bar at the top of the page",
+      "detail": "After logging in, locate the search bar typically found at the top of the page. It is a long rectangular box with a magnifying glass icon."
+    },
+    {
+      "step": "Enter keywords related to the asset you're looking for",
+      "detail": "In the search bar, type in specific keywords related to the asset you are looking for. Keywords could be the name of the asset, its type, or any other characteristic that describes the asset."
+    },
+    {
+      "step": "Use filters on the left panel to narrow down your search results",
+      "detail": "If your search returns too many results, use the filters located on the left panel of the screen. These filters may include asset type, date added, or other characteristics. Click on the filter options that apply to your search to narrow down the results."
+    },
+    {
+      "step": "Click on an asset thumbnail to view its details",
+      "detail": "The search results will be displayed as thumbnails, or small preview images, of the assets. Click on any thumbnail to view more information about the asset, such as its name, type, and date added."
+    },
+    {
+      "step": "Use advanced search options if needed for more specific queries",
+      "detail": "If your search needs to be more specific, use the advanced search options. These options may include searching within specific folders or searching by the date the asset was last modified. To access advanced search, look for a button or link near the search bar that says 'Advanced Search' or similar."
+    }
+  ]
+}

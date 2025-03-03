@@ -1,0 +1,58 @@
+# Environment variables
+.env
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Logs
+*.log
+logs/
+
+# Virtual environments
+venv/
+brandworkz-venv/
+ENV/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Local development settings
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+node_modules/
+.env
+brandworkz_ai_agent.log

@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brandworkz AI Assistant</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bs-body-bg);
+            transition: background-color 0.3s ease;
+        }
+        
+        .header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container-fluid {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+        
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            max-width: 65%;
+            border-right: 1px solid var(--bs-border-color);
+        }
+        
+        .sidebar {
+            width: 35%;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: var(--bs-tertiary-bg);
+        }
+        
+        .chat-history {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: var(--bs-body-bg);
+            border: 1px solid var(--bs-border-color);
+            margin-bottom: 20px;
+        }
+        
+        .input-container {
+            display: flex;
+        }
+        
+        .input-container textarea {
+            flex: 1;
+            border-radius: 20px;
+            padding: 10px 15px;
+            resize: none;
+            border: 1px solid var(--bs-border-color);
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+        }
+        
+        .send-button {
+            margin-left: 10px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message-content {
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        
+        .user-message {
+            align-items: flex-end;
+        }
+        
+        .user-message .message-content {
+            background-color: #0d6efd;
+            color: white;
+        }
+        
+        .assistant-message {
+            align-items: flex-start;
+        }
+        
+        .assistant-message .message-content {
+            background-color: var(--bs-tertiary-bg);
+            color: var(--bs-body-color);
+        }
+        
+        .feedback-container {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+            gap: 10px;
+            padding-left: 15px;
+        }
+        
+        .feedback-container button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .feedback-container button:hover {
+            transform: scale(1.2);
+        }
+        
+        .feedback-container .btn-feedback-positive {
+            color: #198754;
+        }
+        
+        .feedback-container .btn-feedback-negative {
+            color: #dc3545;
+        }
+        
+        .feedback-container .feedback-text {
+            font-size: 0.8rem;
+            color: var(--bs-secondary-color);
+        }
+        
+        .feedback-thanks {
+            font-size: 0.8rem;
+            color: var(--bs-success);
+            margin-left: 5px;
+        }
+        
+        .search-result {
+            background-color: var(--bs-body-bg);
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid var(--bs-border-color);
+            transition: all 0.3s;
+        }
+        
+        .search-result:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background-color: #0d6efd;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .avatar.user {
+            background-color: #6c757d;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .timestamp {
+            font-size: 0.8rem;
+            color: var(--bs-secondary-color);
+            margin-left: 10px;
+        }
+        
+        .tab-content {
+            height: 100%;
+            overflow-y: auto;
+        }
+        
+        .tab-pane {
+            height: 100%;
+        }
+        
+        pre {
+            white-space: pre-wrap;
+            background-color: var(--bs-tertiary-bg);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .instructions-container {
+            background-color: var(--bs-body-bg);
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        .instructions-title {
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .instructions-list {
+            list-style-type: decimal;
+            padding-left: 20px;
+        }
+        
+        .instructions-list li {
+            margin-bottom: 10px;
+        }
+        
+        .document-thumbnail {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .doc-preview {
+            cursor: pointer;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Export Chat Button */
+        .export-button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1><i class="fas fa-rocket me-2"></i> Brandworkz AI Assistant</h1>
+                <div class="action-buttons">
+                    <button id="toggleTheme" class="btn btn-outline-light">
+                        <i class="fas fa-moon me-1"></i> Dark Mode
+                    </button>
+                    <button id="exportChat" class="btn btn-outline-light export-button">
+                        <i class="fas fa-download me-1"></i> Export Chat
+                    </button>
+                    <button id="clearChat" class="btn btn-outline-light">
+                        <i class="fas fa-trash me-1"></i> Clear Chat
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-fluid">
+        <div class="main-content">
+            <div class="chat-container">
+                <div class="chat-history" id="chatHistory">
+                    <div class="message assistant-message">
+                        <div class="message-header">
+                            <div class="avatar">AI</div>
+                            <span>Assistant</span>
+                            <span class="timestamp">Just now</span>
+                        </div>
+                        <div class="message-content">
+                            Hello! I'm your Brandworkz AI Assistant. I can provide step-by-step guides for common Brandworkz processes. Please ask me how to perform a specific task, or select a guide from the panel on the right.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-container">
+                    <textarea id="userInput" class="form-control" placeholder="Type your message here..." rows="2"></textarea>
+                    <button id="sendButton" class="btn btn-primary send-button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <ul class="nav nav-tabs mb-3" id="sidebarTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="guides-tab" data-bs-toggle="tab" data-bs-target="#guides" type="button" role="tab" aria-controls="guides" aria-selected="true">How-to Guides</button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="sidebarTabContent">                    
+                    <div class="tab-pane fade show active" id="guides" role="tabpanel" aria-labelledby="guides-tab">
+                        <div class="mb-3">
+                            <select id="categorySelect" class="form-select mb-2">
+                                <option value="all" selected>All Categories</option>
+                                <option value="assets">Asset Management</option>
+                                <option value="collections">Collection Management</option>
+                                <option value="sharing">Sharing & Collaboration</option>
+                            </select>
+                            
+                            <select id="processSelect" class="form-select">
+                                <option value="" selected disabled>Select a process</option>
+                                <option value="upload_asset" data-category="assets">How to upload an asset</option>
+                                <option value="search_for_assets" data-category="assets">How to search for assets</option>
+                                <option value="create_collection" data-category="collections">How to create a collection</option>
+                                <option value="share_assets" data-category="sharing">How to share assets</option>
+                                <option value="download_assets" data-category="assets">How to download assets</option>
+                            </select>
+                        </div>
+                        
+                        <div id="processInstructions">
+                            <!-- Process instructions will appear here -->
+                            <div class="text-center text-muted p-5">
+                                <i class="fas fa-book fa-3x mb-3"></i>
+                                <p>Select a process from the dropdown to view instructions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Marked.js for markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatHistory = document.getElementById('chatHistory');
+            const userInput = document.getElementById('userInput');
+            const sendButton = document.getElementById('sendButton');
+            const clearChatButton = document.getElementById('clearChat');
+            const processSelect = document.getElementById('processSelect');
+            const categorySelect = document.getElementById('categorySelect');
+            const processInstructions = document.getElementById('processInstructions');
+            const toggleThemeButton = document.getElementById('toggleTheme');
+            const exportChatButton = document.getElementById('exportChat');
+            
+            let isDarkMode = false;
+            let conversationData = [];
+            
+            // Dark mode toggle
+            toggleThemeButton.addEventListener('click', function() {
+                isDarkMode = !isDarkMode;
+                
+                if (isDarkMode) {
+                    document.documentElement.setAttribute('data-bs-theme', 'dark');
+                    this.innerHTML = '<i class="fas fa-sun me-1"></i> Light Mode';
+                } else {
+                    document.documentElement.setAttribute('data-bs-theme', 'light');
+                    this.innerHTML = '<i class="fas fa-moon me-1"></i> Dark Mode';
+                }
+            });
+            
+            // Export chat functionality
+            exportChatButton.addEventListener('click', function() {
+                // Create a text version of the conversation
+                let conversationText = "# Brandworkz AI Assistant Conversation\n\n";
+                
+                // If using our stored data structure
+                if (conversationData.length > 0) {
+                    conversationData.forEach(item => {
+                        const role = item.role === 'user' ? 'You' : 'Assistant';
+                        conversationText += `## ${role} (${item.timestamp})\n\n${item.content}\n\n`;
+                    });
+                } 
+                // Fallback to parsing the DOM
+                else {
+                    const messages = chatHistory.querySelectorAll('.message');
+                    messages.forEach(message => {
+                        const isUser = message.classList.contains('user-message');
+                        const role = isUser ? 'You' : 'Assistant';
+                        const timestamp = message.querySelector('.timestamp').textContent;
+                        const content = message.querySelector('.message-content').innerText;
+                        
+                        conversationText += `## ${role} (${timestamp})\n\n${content}\n\n`;
+                    });
+                }
+                
+                // Create a download link
+                const blob = new Blob([conversationText], { type: 'text/markdown' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                
+                // Set filename with current date/time
+                const now = new Date();
+                const filename = `brandworkz-conversation-${now.toISOString().split('T')[0]}.md`;
+                
+                a.href = url;
+                a.download = filename;
+                a.click();
+                
+                URL.revokeObjectURL(url);
+            });
+            
+            // Filter processes by category
+            categorySelect.addEventListener('change', function() {
+                const selectedCategory = this.value;
+                const options = processSelect.querySelectorAll('option');
+                
+                // Reset the process select
+                processSelect.value = '';
+                processInstructions.innerHTML = `
+                    <div class="text-center text-muted p-5">
+                        <i class="fas fa-book fa-3x mb-3"></i>
+                        <p>Select a process from the dropdown to view instructions</p>
+                    </div>
+                `;
+                
+                // Show/hide options based on category
+                options.forEach(option => {
+                    if (option.value === '') return; // Skip the placeholder
+                    
+                    const category = option.getAttribute('data-category');
+                    
+                    if (selectedCategory === 'all' || category === selectedCategory) {
+                        option.style.display = '';
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Send message on Enter key (but allow Shift+Enter for new lines)
+            userInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            // Send message on button click
+            sendButton.addEventListener('click', sendMessage);
+            
+            // Clear chat history
+            clearChatButton.addEventListener('click', function() {
+                chatHistory.innerHTML = '';
+                conversationData = [];
+                
+                // Add welcome message
+                addMessage('assistant', 'Hello! I\'m your Brandworkz AI Assistant. I can provide step-by-step guides for common Brandworkz processes. Please ask me how to perform a specific task, or select a guide from the panel on the right.');
+            });
+            
+            // Handle process selection
+            processSelect.addEventListener('change', function() {
+                const processName = this.value;
+                if (processName) {
+                    getProcessInstructions(processName);
+                }
+            });
+            
+            // Add feedback to a message
+            function addFeedback(messageDiv, role) {
+                if (role !== 'assistant') return;
+                
+                const feedbackContainer = document.createElement('div');
+                feedbackContainer.className = 'feedback-container';
+                
+                const feedbackText = document.createElement('span');
+                feedbackText.className = 'feedback-text';
+                feedbackText.textContent = 'Was this helpful?';
+                
+                const positiveButton = document.createElement('button');
+                positiveButton.className = 'btn-feedback-positive';
+                positiveButton.innerHTML = '<i class="fas fa-thumbs-up"></i>';
+                
+                const negativeButton = document.createElement('button');
+                negativeButton.className = 'btn-feedback-negative';
+                negativeButton.innerHTML = '<i class="fas fa-thumbs-down"></i>';
+                
+                feedbackContainer.appendChild(feedbackText);
+                feedbackContainer.appendChild(positiveButton);
+                feedbackContainer.appendChild(negativeButton);
+                
+                // Add event listeners
+                positiveButton.addEventListener('click', function() {
+                    handleFeedback(messageDiv, true);
+                });
+                
+                negativeButton.addEventListener('click', function() {
+                    handleFeedback(messageDiv, false);
+                });
+                
+                messageDiv.appendChild(feedbackContainer);
+            }
+            
+            // Handle feedback submission
+            function handleFeedback(messageDiv, isPositive) {
+                const feedbackContainer = messageDiv.querySelector('.feedback-container');
+                
+                // Create a thanks message
+                const thanksMessage = document.createElement('span');
+                thanksMessage.className = 'feedback-thanks';
+                thanksMessage.textContent = 'Thanks for your feedback!';
+                
+                // Remove the original feedback elements
+                feedbackContainer.innerHTML = '';
+                feedbackContainer.appendChild(thanksMessage);
+                
+                // TODO: Send feedback to server
+                console.log('Feedback:', isPositive ? 'Positive' : 'Negative');
+                
+                // In a real implementation, you would send this to your backend:
+                /*
+                fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        messageId: messageDiv.id,
+                        feedback: isPositive ? 'positive' : 'negative'
+                    })
+                });
+                */
+            }
+            
+            function sendMessage() {
+                const message = userInput.value.trim();
+                if (!message) return;
+                
+                // Add user message to chat
+                addMessage('user', message);
+                
+                // Clear input
+                userInput.value = '';
+                
+                // Add loading indicator
+                const loadingId = addLoading();
+                
+                // Send message to API
+                fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Remove loading indicator
+                    removeLoading(loadingId);
+                    
+                    // Add assistant response
+                    if (data.success) {
+                        addMessage('assistant', data.response);
+                    } else {
+                        addMessage('assistant', 'Sorry, I encountered an error. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    removeLoading(loadingId);
+                    addMessage('assistant', 'Sorry, I encountered an error. Please try again.');
+                });
+            }
+            
+            function getProcessInstructions(processName) {
+                // Add loading indicator
+                processInstructions.innerHTML = '<div class="loading"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+                
+                // Add process request to chat
+                addMessage('user', `How to ${processName.replace('_', ' ')}?`);
+                
+                // Add loading indicator to chat
+                const loadingId = addLoading();
+                
+                // Send process request to API
+                fetch('/api/process', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ process_name: processName })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Remove loading indicator
+                    removeLoading(loadingId);
+                    
+                    // Add assistant response
+                    if (data.success) {
+                        addMessage('assistant', data.response);
+                        displayProcessInstructions(data.response);
+                    } else {
+                        addMessage('assistant', 'Sorry, I couldn\'t find instructions for that process.');
+                        processInstructions.innerHTML = '<div class="alert alert-danger">Failed to load instructions. Please try again.</div>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    removeLoading(loadingId);
+                    addMessage('assistant', 'Sorry, I encountered an error while retrieving process instructions.');
+                    processInstructions.innerHTML = '<div class="alert alert-danger">Failed to load instructions. Please try again.</div>';
+                });
+            }
+            
+            function addMessage(role, content) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${role}-message`;
+                messageDiv.id = 'msg-' + Date.now();
+                
+                const header = document.createElement('div');
+                header.className = 'message-header';
+                
+                const avatar = document.createElement('div');
+                avatar.className = `avatar ${role === 'user' ? 'user' : ''}`;
+                avatar.textContent = role === 'user' ? 'U' : 'AI';
+                
+                const name = document.createElement('span');
+                name.textContent = role === 'user' ? 'You' : 'Brandworkz AI';
+                
+                const timestamp = document.createElement('span');
+                timestamp.className = 'timestamp';
+                const now = new Date();
+                timestamp.textContent = now.toLocaleTimeString();
+                
+                header.appendChild(avatar);
+                header.appendChild(name);
+                header.appendChild(timestamp);
+                
+                const messageContent = document.createElement('div');
+                messageContent.className = 'message-content';
+                messageContent.innerHTML = marked.parse(content);
+                
+                messageDiv.appendChild(header);
+                messageDiv.appendChild(messageContent);
+                
+                // Add to DOM
+                chatHistory.appendChild(messageDiv);
+                
+                // Add feedback buttons for assistant messages
+                if (role === 'assistant') {
+                    addFeedback(messageDiv, role);
+                }
+                
+                // Save to conversation data
+                conversationData.push({
+                    id: messageDiv.id,
+                    role: role,
+                    content: content,
+                    timestamp: now.toLocaleTimeString()
+                });
+                
+                // Scroll to bottom
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            }
+            
+            function addLoading() {
+                const id = 'loading-' + Date.now();
+                const loadingDiv = document.createElement('div');
+                loadingDiv.id = id;
+                loadingDiv.className = 'loading';
+                loadingDiv.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>';
+                
+                chatHistory.appendChild(loadingDiv);
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+                
+                return id;
+            }
+            
+            function removeLoading(id) {
+                const loadingElement = document.getElementById(id);
+                if (loadingElement) {
+                    loadingElement.remove();
+                }
+            }
+            
+            function displayProcessInstructions(instructions) {
+                // Extract the process name and steps from the instruction text
+                const lines = instructions.split('\n');
+                let title = lines[0];
+                let steps = [];
+                
+                let inSteps = false;
+                
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (line && inSteps) {
+                        steps.push(line);
+                    } else if (line) {
+                        inSteps = true;
+                        steps.push(line);
+                    }
+                }
+                
+                let html = `
+                    <div class="instructions-container">
+                        <h4 class="instructions-title">${title}</h4>
+                        <ol class="instructions-list">
+                `;
+                
+                steps.forEach(step => {
+                    // Remove the number prefix if it exists
+                    const stepText = step.replace(/^\d+\.\s*/, '');
+                    html += `<li>${stepText}</li>`;
+                });
+                
+                html += `
+                        </ol>
+                    </div>
+                `;
+                
+                processInstructions.innerHTML = html;
+            }
+            
+            // Initialize the conversationData with the welcome message
+            const initialMessage = chatHistory.querySelector('.message-content').innerText;
+            const initialTimestamp = new Date().toLocaleTimeString();
+            
+            conversationData.push({
+                id: 'msg-initial',
+                role: 'assistant',
+                content: initialMessage,
+                timestamp: initialTimestamp
+            });
+        });
+    </script>
+</body>
+</html>
