@@ -56,3 +56,5 @@ Thumbs.db
 node_modules/
 .env
 brandworkz_ai_agent.log
+data/vector_db/
+data/vector_db_backup/

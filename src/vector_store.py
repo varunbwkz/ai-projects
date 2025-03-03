@@ -7,7 +7,7 @@ from typing import List, Dict, Any, Optional, Union
 
 import chromadb
 from chromadb.utils import embedding_functions
-import openai
+from openai import OpenAI
 
 logger = logging.getLogger(__name__)
 

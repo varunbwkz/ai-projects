@@ -1,8 +1,9 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { FaRocket, FaMoon, FaSun, FaDownload, FaTrash } from 'react-icons/fa';
+import { FaRocket, FaMoon, FaSun, FaDownload, FaTrash, FaCog } from 'react-icons/fa';
 import { ThemeContext } from '../context/ThemeContext';
 import { useChat } from '../context/ChatContext';
+import { Link, useLocation } from 'react-router-dom';
 
 const HeaderContainer = styled.header`
   background-color: var(--primary-color);
@@ -19,12 +20,22 @@ const HeaderContent = styled.div`
   align-items: center;
 `;
 
-const Title = styled.h1`
-  font-size: 1.5rem;
-  font-weight: 600;
+const Logo = styled(Link)`
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  
+  svg {
+    font-size: 1.5rem;
+  }
+  
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 
 const ActionButtons = styled.div`
@@ -81,11 +92,50 @@ const ExportOption = styled.div`
   }
 `;
 
+const NavLink = styled(Link)`
+  margin-left: 20px;
+  color: var(--text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  
+  &:hover {
+    background-color: var(--bg-hover);
+  }
+  
+  &.active {
+    background-color: var(--accent-light);
+    color: var(--accent);
+  }
+`;
+
+const ThemeToggle = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+`;
+
 const Header = () => {
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
   const { clearChat, exportChat } = useChat();
   const [exportMenuOpen, setExportMenuOpen] = useState(false);
   const exportMenuRef = useRef(null);
+  const location = useLocation();
 
   // Close the export menu when clicking outside
   useEffect(() => {
@@ -113,14 +163,20 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderContent>
-        <Title>
-          <FaRocket /> Brandworkz AI Assistant
-        </Title>
+        <Logo to="/">
+          <FaRocket />
+          <span>Brandworkz AI Assistant</span>
+        </Logo>
         <ActionButtons>
-          <Button onClick={toggleTheme}>
+          <NavLink 
+            to="/admin" 
+            className={location.pathname === '/admin' ? 'active' : ''}
+          >
+            <FaCog /> Admin
+          </NavLink>
+          <ThemeToggle onClick={toggleTheme}>
             {isDarkMode ? <FaSun /> : <FaMoon />}
-            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-          </Button>
+          </ThemeToggle>
           <div style={{ position: 'relative' }} ref={exportMenuRef}>
             <Button onClick={handleExportClick}>
               <FaDownload />

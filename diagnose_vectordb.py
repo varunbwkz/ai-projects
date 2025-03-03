@@ -65,15 +65,15 @@ def test_embedding_generation():
     logger.info("Testing embedding generation...")
     
     try:
-        import openai
-        openai.api_key = os.getenv("OPENAI_API_KEY")
+        from openai import OpenAI
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         
-        response = openai.Embedding.create(
+        response = client.embeddings.create(
             model="text-embedding-ada-002",
             input="Hello world"
         )
         
-        embedding = response['data'][0]['embedding']
+        embedding = response.data[0].embedding
         
         if embedding and len(embedding) > 0:
             logger.info(f"✅ Embedding generation works (vector dimension: {len(embedding)})")

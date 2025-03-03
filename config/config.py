@@ -3,7 +3,7 @@ import json
 import glob
 import logging
 from dotenv import load_dotenv
-import openai
+from openai import OpenAI
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -19,7 +19,8 @@ BRANDWORKZ_PASSWORD = os.getenv("BRANDWORKZ_PASSWORD", "")
 
 # OpenAI API key
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-openai.api_key = OPENAI_API_KEY
+# Initialize OpenAI client
+openai_client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Vector store enabled flag
 USE_VECTOR_STORE = os.getenv("USE_VECTOR_STORE", "True").lower() == "true"
@@ -67,12 +68,12 @@ if USE_VECTOR_STORE:
 def generate_embedding(text):
     """Generate embedding for text using OpenAI's embedding model"""
     try:
-        # For OpenAI 0.28.0
-        response = openai.Embedding.create(
+        # For OpenAI 1.0.0+
+        response = openai_client.embeddings.create(
             model="text-embedding-ada-002",
             input=text
         )
-        return response['data'][0]['embedding']
+        return response.data[0].embedding
     except Exception as e:
         logger.error(f"Error generating embedding: {e}")
         return None
