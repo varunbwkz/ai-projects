@@ -9,19 +9,22 @@
     "deploy": "vite build && echo 'React build complete. Files are in ../static/react/'"
   },
   "dependencies": {
+    "axios": "^1.4.0",
+    "docx": "^8.2.3",
+    "express": "^4.21.2",
+    "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-markdown": "^8.0.7",
-    "styled-components": "^6.0.7",
-    "axios": "^1.4.0",
-    "jspdf": "^2.5.1",
-    "docx": "^8.2.3"
+    "react-router-dom": "^7.2.0",
+    "styled-components": "^6.0.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
+    "http-proxy-middleware": "^3.0.3",
     "vite": "^4.4.5"
   }
 }
