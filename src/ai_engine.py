@@ -60,40 +60,67 @@ class AIEngine:
         """
         query_lower = query.lower()
         
-        # Check for direct process mentions (e.g., "show me the asset workflow process")
-        for process_name in PROCESS_INSTRUCTIONS.keys():
-            process_pattern = re.compile(r'\b' + re.escape(process_name.replace('_', ' ')) + r'\b')
-            if process_pattern.search(query_lower):
-                logger.info(f"Direct process match found: {process_name}")
-                return process_name
+        # Detect query intent
+        navigation_intent = any(word in query_lower for word in [
+            "how to", "how do i", "where is", "navigate to", "go to", "find the", "access the"
+        ])
         
-        # Try vector similarity search
+        capability_intent = any(word in query_lower for word in [
+            "what can", "what actions", "capabilities", "features", "options", "settings for", 
+            "what are", "what is available", "what do", "functions", "actions"
+        ])
+        
+        # For navigation processes, only match if there's a clear navigation intent
+        for process_name in PROCESS_INSTRUCTIONS.keys():
+            if "navigate_to" in process_name:
+                process_pattern = re.compile(r'\b' + re.escape(process_name.replace('_', ' ')) + r'\b')
+                if process_pattern.search(query_lower):
+                    # For navigation processes, require navigation intent
+                    if navigation_intent and not capability_intent:
+                        logger.info(f"Navigation process match found: {process_name}")
+                        return process_name
+                    continue  # Skip this match if it's a capability query
+            else:
+                # For non-navigation processes, use normal matching
+                process_pattern = re.compile(r'\b' + re.escape(process_name.replace('_', ' ')) + r'\b')
+                if process_pattern.search(query_lower):
+                    logger.info(f"Direct process match found: {process_name}")
+                    return process_name
+        
+        # Try vector similarity search with adjusted thresholds
         try:
-            # Get top matches from vector search
             vector_results = search_processes_vector(query, top_k=1)
             
             if vector_results and len(vector_results) > 0:
                 best_match = vector_results[0]['process_id']
                 similarity = vector_results[0]['similarity']
                 
-                # Only return match if similarity is above threshold
-                if similarity > 0.75:  # Adjust threshold as needed
+                # Higher threshold for navigation processes when asking about capabilities
+                if "navigate_to" in best_match and capability_intent:
+                    threshold = 0.9  # Very high threshold for navigation matches on capability queries
+                else:
+                    threshold = 0.75  # Normal threshold for other cases
+                
+                if similarity > threshold:
                     logger.info(f"Vector similarity match found: {best_match} with similarity {similarity}")
                     return best_match
         except Exception as e:
             logger.error(f"Error in vector similarity search: {e}")
-            # Fall back to keyword matching if vector search fails
         
-        # Fall back to keyword matches
+        # Fall back to keyword matches with intent awareness
         best_match = None
         highest_score = 0
         
         for process_name, keywords in self.process_keywords.items():
+            # Skip navigation processes for capability queries
+            if "navigate_to" in process_name and capability_intent:
+                continue
+                
             score = 0
             for keyword in keywords:
                 if keyword in query_lower:
                     # Higher score for multi-word matches
-                    score += len(keyword.split()) 
+                    score += len(keyword.split())
             
             if score > highest_score:
                 highest_score = score
