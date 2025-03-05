@@ -1,38 +1,39 @@
 {
-  "title": "Search for Assets",
-  "description": "Detailed steps on how to effectively search for assets within the Brandworkz platform.",
-  "keywords": [
-    "search",
-    "searching",
-    "find asset",
-    "locate",
-    "search assets",
-    "find"
-  ],
+  "title": "Searching for Assets",
+  "description": "How to effectively search for and find assets in the Brandworkz platform",
+  "keywords": ["search", "find assets", "asset search", "advanced search", "filters", "search results", "find files", "locate assets", "search filters"],
   "steps": [
-    {
-      "step": "Log in to the Brandworkz platform using your credentials",
-      "detail": "Open your preferred web browser and enter the URL for the Brandworkz platform. Use your assigned username and password to log in. If you do not remember your password, use the 'Forgot Password' link to reset it."
-    },
-    {
-      "step": "Use the search bar at the top of the page",
-      "detail": "After logging in, locate the search bar typically found at the top of the page. It is a long rectangular box with a magnifying glass icon."
-    },
-    {
-      "step": "Enter keywords related to the asset you're looking for",
-      "detail": "In the search bar, type in specific keywords related to the asset you are looking for. Keywords could be the name of the asset, its type, or any other characteristic that describes the asset."
-    },
-    {
-      "step": "Use filters on the left panel to narrow down your search results",
-      "detail": "If your search returns too many results, use the filters located on the left panel of the screen. These filters may include asset type, date added, or other characteristics. Click on the filter options that apply to your search to narrow down the results."
-    },
-    {
-      "step": "Click on an asset thumbnail to view its details",
-      "detail": "The search results will be displayed as thumbnails, or small preview images, of the assets. Click on any thumbnail to view more information about the asset, such as its name, type, and date added."
-    },
-    {
-      "step": "Use advanced search options if needed for more specific queries",
-      "detail": "If your search needs to be more specific, use the advanced search options. These options may include searching within specific folders or searching by the date the asset was last modified. To access advanced search, look for a button or link near the search bar that says 'Advanced Search' or similar."
-    }
+    "Log in to your Brandworkz account to access the DAM module.",
+    "Locate the search bar at the top of the interface.",
+    "Enter keywords related to the asset you're looking for. This can include file names, metadata, tags, or content within documents.",
+    "Press Enter or click the search icon to execute your search.",
+    "Review the search results displayed as thumbnails in the main content area.",
+    "To refine your search, use the filters panel typically located on the left side of the search results.",
+    "Filter by asset type (images, videos, documents, etc.) to narrow down results.",
+    "Use date filters to find assets created or modified within specific time periods.",
+    "Filter by metadata fields such as categories, tags, or custom fields specific to your organization.",
+    "For more precise searches, click on 'Advanced Search' if available.",
+    "In Advanced Search, you can combine multiple criteria using AND/OR operators.",
+    "Specify exact metadata field values to find assets with specific properties.",
+    "Save frequently used searches by clicking the 'Save Search' option for quick access later.",
+    "Sort your search results using the sort dropdown menu (by name, date, size, etc.).",
+    "Click on any asset in the results to preview it or view more details.",
+    "Use the thumbnail view options to adjust how results are displayed (grid size, list view, etc.).",
+    "To search within a specific folder, navigate to that folder first before initiating your search.",
+    "Utilize keyboard shortcuts (if available) to quickly navigate through search results."
+  ],
+  "troubleshooting": [
+    "If you can't find an asset, try alternative keywords or more general terms.",
+    "Check if you have applied filters that might be excluding your desired results.",
+    "Ensure you have the necessary permissions to view the assets you're searching for.",
+    "If searching for recently uploaded assets, allow time for the system to index new content.",
+    "For content within documents, ensure that text extraction is enabled for the file types you're searching."
+  ],
+  "tips": [
+    "Use quotation marks around phrases to search for exact matches.",
+    "Wildcards (* or ?) can help when you're unsure of exact spelling or want to find variations.",
+    "Combine multiple keywords to increase search precision.",
+    "Learn the metadata structure used in your organization to improve search effectiveness.",
+    "Regularly review and update asset metadata to maintain searchability."
   ]
 }

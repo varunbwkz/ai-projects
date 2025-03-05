@@ -1,18 +1,38 @@
 {
-  "title": "Download Assets",
-  "description": "How to download assets from brandworkz",
+  "title": "Downloading Assets",
+  "description": "How to download assets from the Brandworkz platform with various options",
   "keywords": [
     "download",
     "download asset",
     "asset download",
-    "asset downloading",
-    "file download"
+    "download wizards",
+    "download options",
+    "bulk download",
+    "zip download",
+    "download original"
   ],
   "steps": [
-    "Log into the system and navigate to the desired folder where you have the assets",
-    "Select the asset which you want to download by clicking on it (once).",
-    "Once the asset is selected, the Download button will appear on the admin bar to the top of the asset on the page.",
-    "Click on Download and the asset will get downloaded to the local Downloads folder."
+    "Navigate to the folder containing the asset(s) you want to download.",
+    "Select the asset(s) you wish to download by clicking on them.",
+    "Click the download button in the action bar.",
+    "If multiple download options are available, you'll see an arrow on the download button.",
+    "For the original file, simply click the main download button.",
+    "For other download options (wizards), click the arrow to see available formats.",
+    "Select your preferred download format from the dropdown options.",
+    "The download will begin automatically with your selected format.",
+    "For assets in different folders, add them to the sidebar first.",
+    "Then download all sidebar assets together as a zipped file."
   ],
-  "troubleshooting": []
+  "troubleshooting": [
+    "If using an older browser where the 'Start Download' button doesn't work, click on the 'DOWNLOAD LINK' and 'SAVE AS' to complete the download.",
+    "If download options are limited, this may be due to your user permissions.",
+    "If you only see one download option, there will be no arrow on the button.",
+    "Note that downloading with wizards does not affect the original file stored on the server."
+  ],
+  "tips": [
+    "Custom download wizards can convert images to specific resolutions, saving time on post-download conversions.",
+    "Users with 'download original' permission will see a distinctly separated arrow on the download button.",
+    "Users without 'download original' permission will see the arrow as part of the download button.",
+    "Download wizards can be set up for specific user groups through the group admin area."
+  ]
 }

@@ -60,7 +60,7 @@ class AIEngine:
         """
         query_lower = query.lower()
         
-        # Detect query intent
+        # Detect query intent to see if user is asking about Nav or Capability
         navigation_intent = any(word in query_lower for word in [
             "how to", "how do i", "where is", "navigate to", "go to", "find the", "access the"
         ])
@@ -70,7 +70,7 @@ class AIEngine:
             "what are", "what is available", "what do", "functions", "actions"
         ])
         
-        # For navigation processes, only match if there's a clear navigation intent
+        # For navigation processes, only match if theres a clear navigation intent
         for process_name in PROCESS_INSTRUCTIONS.keys():
             if "navigate_to" in process_name:
                 process_pattern = re.compile(r'\b' + re.escape(process_name.replace('_', ' ')) + r'\b')
@@ -79,9 +79,9 @@ class AIEngine:
                     if navigation_intent and not capability_intent:
                         logger.info(f"Navigation process match found: {process_name}")
                         return process_name
-                    continue  # Skip this match if it's a capability query
+                    continue  # Skip this match if its a capability query
             else:
-                # For non-navigation processes, use normal matching
+                # For non-navigation processes, just use the normal matching.. lets not complicate things
                 process_pattern = re.compile(r'\b' + re.escape(process_name.replace('_', ' ')) + r'\b')
                 if process_pattern.search(query_lower):
                     logger.info(f"Direct process match found: {process_name}")
@@ -475,6 +475,13 @@ Include these suggestions towards the end of your response in a "What You Might 
             response_text += "## Potential Pitfalls to Avoid:\n\n"
             for issue in process_data['troubleshooting']:
                 response_text += f"- {issue}\n"
+            response_text += "\n"
+        
+        # Add tips if available
+        if 'tips' in process_data and process_data['tips']:
+            response_text += "## Helpful Tips:\n\n"
+            for tip in process_data['tips']:
+                response_text += f"- {tip}\n"
             response_text += "\n"
         
         # Add prerequisites if available
