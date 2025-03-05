@@ -1,0 +1,35 @@
+{
+  "title": "Deleting Assets",
+  "description": "How to permanently delete assets from the Brandworkz platform",
+  "keywords": ["delete assets", "remove assets", "permanent deletion", "disable assets", "asset removal", "delete files", "asset management", "asset deletion"],
+  "steps": [
+    "Log in to your Brandworkz account to access the DAM module.",
+    "Navigate to the folder containing the asset(s) you want to delete.",
+    "Select the asset(s) you wish to delete by checking the box next to them.",
+    "Locate the delete option in the asset admin bar.",
+    "Click the delete button to initiate the deletion process.",
+    "Review the alert message: 'Are you sure you want to permanently delete these asset(s) from the system?'",
+    "At this point, you have two options:",
+    "Option 1: Click 'Delete' to permanently remove the asset(s) from the system.",
+    "Option 2: Choose 'Disable' instead to make the asset(s) inaccessible without permanently deleting them.",
+    "If you chose to delete, confirm your decision when prompted.",
+    "Wait for the deletion process to complete."
+  ],
+  "troubleshooting": [
+    "If you cannot see the delete option, verify that you have the necessary permissions to delete assets.",
+    "If you accidentally initiated deletion, you can cancel the process before confirming.",
+    "If you're unsure about permanent deletion, consider using the 'Disable' option instead.",
+    "Remember that deleted assets cannot be retrieved once the deletion is confirmed.",
+    "If you need to delete multiple assets, ensure all selected assets are meant to be deleted before proceeding."
+  ],
+  "tips": [
+    "Consider disabling assets instead of deleting them if you might need them in the future.",
+    "Always double-check your selection before confirming deletion.",
+    "For bulk deletions, review the list of selected assets carefully.",
+    "Keep in mind that deletion is permanent and cannot be undone.",
+    "If an asset is referenced by other content, consider the impact of deletion on those references.",
+    "Regular cleanup of unused assets can help maintain system performance and storage space.",
+    "Document any important asset deletions for future reference.",
+    "Consider exporting asset metadata before deletion if you need to maintain records."
+  ]
+}

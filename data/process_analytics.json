@@ -1,0 +1,55 @@
+{
+  "process_requests": {
+    "tag_edit_asset": {
+      "count": 2,
+      "queries": [
+        {
+          "query": "how can i tag assets?",
+          "timestamp": "2025-03-05T10:39:21.699102"
+        },
+        {
+          "query": "Hey there. how do i tag assets?",
+          "timestamp": "2025-03-05T10:42:03.221854"
+        }
+      ]
+    },
+    "metadata_management": {
+      "count": 1,
+      "queries": [
+        {
+          "query": "how can i change the metadata though?",
+          "timestamp": "2025-03-05T10:42:36.102432"
+        }
+      ]
+    }
+  },
+  "daily_stats": {
+    "2025-03-05": {
+      "total_requests": 7,
+      "matched_requests": 3,
+      "unmatched_requests": 4,
+      "processes": {
+        "tag_edit_asset": 2,
+        "metadata_management": 1
+      }
+    }
+  },
+  "unmatched_queries": [
+    {
+      "query": "Hello im new here. what can i do?",
+      "timestamp": "2025-03-05T10:21:28.561076"
+    },
+    {
+      "query": "how can i store images and documents?",
+      "timestamp": "2025-03-05T10:21:51.880312"
+    },
+    {
+      "query": "Hello im new here. can you help me?",
+      "timestamp": "2025-03-05T10:34:40.425059"
+    },
+    {
+      "query": "so can i modify the tag for any asset?",
+      "timestamp": "2025-03-05T10:42:57.915272"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "title": "Export Tags and Metadata",
+  "description": "How to export metadata and technical information for assets from the Brandworkz platform",
+  "keywords": ["export metadata", "export tags", "asset metadata", "technical information", "bulk export", "metadata export", "asset information", "export to excel", "export to html"],
+  "steps": [
+    "Log in to your Brandworkz account to access the DAM module.",
+    "Choose one of the following export methods based on your needs and permissions:",
+    "For Full Asset Folder Export (System Admin Only):",
+    "- Navigate to the desired folder",
+    "- Hover over 'More' in the bottom admin bar",
+    "- Select 'export tags and metadata'",
+    "For Selected Assets Export (All Users):",
+    "- Navigate to the desired folder",
+    "- Either click 'select all' or manually select specific assets",
+    "- Click the 'export tags and metadata' icon in the top action bar",
+    "For Search Results Export (All Users):",
+    "- Perform a search for the desired assets",
+    "- Use filters if needed to refine results",
+    "- Select the assets you want to export",
+    "- Click the 'export tags and metadata' icon in the top action bar",
+    "If assets use different metasets:",
+    "- You'll be taken to a screen to export per metaset",
+    "- Click on each metaset to access its export page",
+    "On the Export Screen:",
+    "- Choose the export format (Excel Spreadsheet or HTML table)",
+    "- Select the metadata and technical information fields to export",
+    "- Ensure 'Serial Number' is selected (mandatory)",
+    "- Include 'Title' field (recommended for future imports)",
+    "- Make sure the folder name is selected to avoid errors",
+    "- Click 'Submit' to generate the export",
+    "When opening the Excel file:",
+    "- Accept the popup about file format",
+    "- Save the file as an Excel Workbook for future use"
+  ],
+  "troubleshooting": [
+    "If you receive an error during export, verify that the folder name is selected in the export options.",
+    "If you can't see the export option, check if you have the necessary permissions.",
+    "For system-wide exports, ensure you have System Admin privileges.",
+    "If the Excel file shows format warnings, this is normal - just accept and resave as an Excel Workbook.",
+    "If planning to re-import the data later, make sure you've included the Title field in the export.",
+    "The export function only works with assets - it cannot export W2P template tags."
+  ],
+  "tips": [
+    "Always export the Title field even though it's not marked as mandatory - it's required for future imports.",
+    "Use the search and filter options to precisely select assets before exporting.",
+    "Consider exporting to HTML format if you only need to view the data.",
+    "Export in smaller batches if you're experiencing performance issues.",
+    "Keep track of which metasets you're exporting when dealing with multiple asset types.",
+    "Regular exports can help with metadata quality control and asset management.",
+    "Save a backup of the exported file before making any modifications.",
+    "Use this feature to audit asset metadata and ensure consistency across your library."
+  ]
+}

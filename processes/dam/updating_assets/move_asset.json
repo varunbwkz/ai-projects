@@ -1,0 +1,26 @@
+{
+  "title": "Moving Assets",
+  "description": "How to move assets between folders in the Brandworkz platform",
+  "keywords": ["move assets", "relocate files", "change folder", "asset management", "folder organization", "file organization", "asset location"],
+  "steps": [
+    "Log in to your Brandworkz account to access the DAM module.",
+    "Navigate to the folder containing the assets you want to move.",
+    "Select one or multiple assets that you wish to move.",
+    "Click the move icon in the asset admin bar.",
+    "In the folder navigation tree that appears, browse to your target destination folder.",
+    "Click the 'Move' button to confirm and execute the move operation.",
+    "Verify that your assets appear in the new destination folder."
+  ],
+  "troubleshooting": [
+    "If you moved assets to the wrong folder, repeat the process to move them back.",
+    "Ensure you have the necessary permissions to move assets and access both source and destination folders.",
+    "If the move icon is not visible, check if you have the required permissions for moving assets.",
+    "Verify that all selected assets were successfully moved to the new location."
+  ],
+  "tips": [
+    "You can move multiple assets at once - there is no limit to the number of assets that can be moved simultaneously.",
+    "Double-check the destination folder before confirming the move to avoid unnecessary back-and-forth.",
+    "Consider organizing assets in a logical folder structure to make future moves more efficient.",
+    "Moving assets doesn't affect their metadata or relationships - only their location changes."
+  ]
+}

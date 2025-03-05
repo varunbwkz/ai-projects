@@ -14,6 +14,8 @@ import shutil
 
 from src.brandworkz import BrandworkzClient
 from src.ai_engine import AIEngine
+from src.analytics import analytics
+from src.process_recommender import recommender
 from config.config import APP_HOST, APP_PORT, DEBUG
 
 # Set up logging
@@ -369,15 +371,43 @@ async def get_categories():
     
     return categories
 
+@app.get("/api/analytics", response_class=JSONResponse)
+async def get_analytics():
+    """Get process analytics data."""
+    try:
+        report = analytics.generate_report()
+        return JSONResponse({
+            "success": True,
+            "data": report
+        })
+    except Exception as e:
+        logger.error(f"Error generating analytics report: {str(e)}")
+        return JSONResponse({
+            "success": False,
+            "error": f"Failed to generate analytics report: {str(e)}"
+        })
+
+@app.get("/api/process/{process_id}/recommendations", response_class=JSONResponse)
+async def get_process_recommendations(process_id: str, limit: int = 3):
+    """Get recommended related processes."""
+    try:
+        recommendations = recommender.get_related_processes(process_id, limit=limit)
+        return JSONResponse({
+            "success": True,
+            "process_id": process_id,
+            "recommendations": recommendations
+        })
+    except Exception as e:
+        logger.error(f"Error getting process recommendations: {str(e)}")
+        return JSONResponse({
+            "success": False,
+            "error": f"Failed to get recommendations: {str(e)}"
+        })
+
 # Only after all API routes, define the index and catch-all routes
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     """Render the React app."""
-    return FileResponse("src/static/react/index.html")
-
-@app.get("/admin", response_class=HTMLResponse)
-async def admin_panel():
-    """Serve the React app for admin panel."""
     return FileResponse("src/static/react/index.html")
 
 # This catch-all route should be the last route defined

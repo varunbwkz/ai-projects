@@ -10,6 +10,7 @@ import json
 import re
 import numpy as np
 import chromadb
+from src.analytics import analytics
 
 from config.config import (
     OPENAI_API_KEY, 
@@ -128,8 +129,12 @@ class AIEngine:
         
         if highest_score > 0:
             logger.info(f"Keyword match found: {best_match} with score {highest_score}")
+            # Track successful match in analytics
+            analytics.track_process_request(query, best_match)
             return best_match
             
+        # Track unmatched query in analytics
+        analytics.track_process_request(query, None)
         return None
     
     def _cosine_similarity(self, vec1, vec2):

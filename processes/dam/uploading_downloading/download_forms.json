@@ -1,0 +1,53 @@
+{
+  "title": "Download Forms",
+  "description": "How to create and implement download consent forms in the Brandworkz platform",
+  "keywords": ["download forms", "consent forms", "download options", "asset download", "user consent", "download permissions", "form creation", "download requirements", "metadata forms"],
+  "steps": [
+    "Log in to your Brandworkz account with administrator privileges.",
+    "Step 1: Create the download form:",
+    "- Navigate to Settings > Metadata & Search",
+    "- Click 'Add a new metaset'",
+    "- Name the metaset (e.g., 'Video Consent form')",
+    "- Select type 'Downloads' for the metaset",
+    "- Click 'Create a new field' and select 'Text-area (plain text)'",
+    "- Add the text you would like users to read before downloading an asset",
+    "- Configure the field settings as needed",
+    "- Save the field",
+    "- Click to create another new field",
+    "- Select 'checkbox' type and make it mandatory",
+    "- Add appropriate text for the checkbox (e.g., 'I agree to the terms')",
+    "- Save the checkbox field",
+    "Step 2: Apply the form to a download option:",
+    "- Go to Settings > Image and Video download options",
+    "- Find and select the relevant download option you want to apply the consent form to",
+    "- Add the previously created consent form to the download option",
+    "- Save your changes",
+    "Step 3: Apply the download option to specific folders for specific groups:",
+    "- Navigate to Settings > Manage groups",
+    "- Select the relevant user group",
+    "- Go to the 'Downloads Options' tab",
+    "- Select the folder where you want to apply the download option",
+    "- Apply the download option with the attached consent form",
+    "- Click 'Update' to save your changes",
+    "- Repeat this process for all relevant groups and folders",
+    "Once complete, users attempting to download assets with the specified download option will be presented with the consent form."
+  ],
+  "troubleshooting": [
+    "If the download form is not appearing, verify that you've applied the download option to the correct folders and groups.",
+    "If users report not seeing the form, check their group permissions and ensure they're in the correct user group.",
+    "If the form appears but doesn't save user responses, verify that the fields are properly configured.",
+    "If the checkbox is not working as mandatory, ensure it's configured correctly in the metaset.",
+    "For any issues with form creation, try refreshing the page and attempting the process again.",
+    "If changes aren't taking effect immediately, try clearing your browser cache or waiting a few minutes."
+  ],
+  "tips": [
+    "Create clear and concise consent text to ensure users understand what they're agreeing to.",
+    "Consider using different consent forms for different types of assets (e.g., one for videos, another for images).",
+    "Regularly review and update your consent forms to ensure they remain relevant and compliant.",
+    "Use descriptive names for your metasets and download options to make administration easier.",
+    "Test the download process from a user account to ensure the form appears as expected.",
+    "Consider adding additional fields to collect more information if needed for certain downloads.",
+    "Keep a record of which download options have forms attached for easier management.",
+    "Remember that you need to repeat the group and folder assignment process for each relevant combination."
+  ]
+}

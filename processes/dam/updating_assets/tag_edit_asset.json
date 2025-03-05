@@ -1,0 +1,45 @@
+{
+  "title": "Tagging & Editing Assets",
+  "description": "How to modify metadata, tags, and properties of assets in the Brandworkz platform",
+  "keywords": ["tag assets", "edit assets", "modify metadata", "asset tags", "keywords", "bulk edit", "asset status", "custom thumbnail", "new version", "export metadata", "import metadata"],
+  "steps": [
+    "Log in to your Brandworkz account to access the DAM module.",
+    "Navigate to the folder containing the asset you want to edit.",
+    "Click on the asset to open its details view.",
+    "Look for the edit or modify option, typically represented by a pencil icon.",
+    "In the edit screen, you can modify the metadata of the asset, such as adding keywords or changing other properties.",
+    "For individual assets, you can change the status in the 'Modify Asset' tab by selecting 'View Only' or 'Hidden'.",
+    "To add a custom thumbnail, go to the 'Modify Asset' section and look for the thumbnail upload option under the current thumbnail.",
+    "If you need to update the asset while keeping all metadata, use the 'New Version' option to upload an updated file.",
+    "For bulk editing, select multiple assets by checking the boxes next to them or click 'Select All'.",
+    "Click the pencil tool in the asset toolbar to open the bulk edit popup.",
+    "Use the Excel-style metadata management form to edit properties of multiple assets simultaneously.",
+    "For fields with identical values across assets, use the 'fill down' feature by clicking the down arrow at the top of the column.",
+    "You can edit a maximum of 500 assets at a time using the bulk edit feature.",
+    "For extensive metadata changes, you can export metadata as an Excel spreadsheet using the export option.",
+    "Edit the exported spreadsheet in Excel, maintaining its original structure.",
+    "Import the modified spreadsheet back into Brandworkz to update the metadata for the affected assets.",
+    "Save your changes when finished to apply all modifications.",
+    "For hierarchical metadata fields, look for the hierarchical icon to select from the appropriate metasets.",
+    "Date fields will provide a calendar popup for easy date selection.",
+    "The bulk edit tool includes undo and redo functionality for your convenience."
+  ],
+  "troubleshooting": [
+    "If you cannot see the edit option, check if you have the necessary permissions to modify assets.",
+    "When bulk editing, remember that you are limited to 500 assets at a time.",
+    "If custom thumbnails don't appear immediately after uploading, try refreshing the page.",
+    "When importing metadata, ensure your spreadsheet maintains the exact structure of the exported file to avoid import errors.",
+    "If status changes don't seem to be working, check with your administrator about your permission levels.",
+    "For bulk editing issues, try working with smaller batches of assets if you experience performance problems."
+  ],
+  "tips": [
+    "Use keywords consistently across assets to improve searchability.",
+    "Consider using the AI-assisted keyword suggestions if available in your system.",
+    "Regular metadata maintenance improves the overall usability of your asset library.",
+    "Custom thumbnails can significantly improve the visual browsing experience for users.",
+    "When uploading new versions, consider adding a note about what changed in the new version.",
+    "Use the 'Select columns to display' option in bulk edit to customize which metadata fields are visible.",
+    "Status changes can be automated using the System Metadata fields 'Expiry Date' and 'Publish Date'.",
+    "Exporting metadata is particularly useful for making extensive changes in an offline environment."
+  ]
+}
