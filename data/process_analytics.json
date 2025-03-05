@@ -66,11 +66,15 @@
       ]
     },
     "asset_previews": {
-      "count": 1,
+      "count": 2,
       "queries": [
         {
           "query": "Where cani preview files?",
           "timestamp": "2025-03-05T14:15:19.738870"
+        },
+        {
+          "query": "sorry i meant, any idea on how to relate ay files?",
+          "timestamp": "2025-03-05T14:45:56.881435"
         }
       ]
     },
@@ -84,11 +88,15 @@
       ]
     },
     "move_asset": {
-      "count": 1,
+      "count": 2,
       "queries": [
         {
           "query": "any idea on how to move various assets around the site?",
           "timestamp": "2025-03-05T14:18:06.355506"
+        },
+        {
+          "query": "how to move assets?",
+          "timestamp": "2025-03-05T14:34:35.659091"
         }
       ]
     },
@@ -118,25 +126,75 @@
           "timestamp": "2025-03-05T14:21:45.547300"
         }
       ]
+    },
+    "relate_assets": {
+      "count": 3,
+      "queries": [
+        {
+          "query": "how to relate assets?",
+          "timestamp": "2025-03-05T14:34:11.511340"
+        },
+        {
+          "query": "how to relate assets i mean dude",
+          "timestamp": "2025-03-05T14:46:07.147283"
+        },
+        {
+          "query": "how to relate files?",
+          "timestamp": "2025-03-05T14:46:18.605917"
+        }
+      ]
+    },
+    "upload_asset": {
+      "count": 2,
+      "queries": [
+        {
+          "query": "how and where do we upload assets?",
+          "timestamp": "2025-03-05T14:38:46.367534"
+        },
+        {
+          "query": "How do we upload any assets?",
+          "timestamp": "2025-03-05T14:44:33.439878"
+        }
+      ]
+    },
+    "copy_paste_assets": {
+      "count": 3,
+      "queries": [
+        {
+          "query": "How to duplicate assets?",
+          "timestamp": "2025-03-05T14:39:33.397978"
+        },
+        {
+          "query": "thanks. any idea on how do we duplicate assets?",
+          "timestamp": "2025-03-05T14:45:05.149068"
+        },
+        {
+          "query": "thanks. can we duplicate any files around?",
+          "timestamp": "2025-03-05T14:45:24.538567"
+        }
+      ]
     }
   },
   "daily_stats": {
     "2025-03-05": {
-      "total_requests": 27,
-      "matched_requests": 16,
-      "unmatched_requests": 11,
+      "total_requests": 42,
+      "matched_requests": 26,
+      "unmatched_requests": 16,
       "processes": {
         "tag_edit_asset": 2,
         "metadata_management": 1,
         "new_asset_folder": 1,
         "create_use_shortcuts": 4,
         "initiate_approval": 2,
-        "asset_previews": 1,
+        "asset_previews": 2,
         "manage_assets": 1,
-        "move_asset": 1,
+        "move_asset": 2,
         "export_metadata": 1,
         "delete_asset": 1,
-        "download_forms": 1
+        "download_forms": 1,
+        "relate_assets": 3,
+        "upload_asset": 2,
+        "copy_paste_assets": 3
       }
     }
   },
@@ -184,6 +242,26 @@
     {
       "query": "what are forms and what can i do with them?",
       "timestamp": "2025-03-05T14:21:11.905096"
+    },
+    {
+      "query": "how can we relate any assets on the site?",
+      "timestamp": "2025-03-05T14:33:43.267554"
+    },
+    {
+      "query": "can we duplicate assets?",
+      "timestamp": "2025-03-05T14:34:45.843026"
+    },
+    {
+      "query": "how to duplicate assets?",
+      "timestamp": "2025-03-05T14:35:24.220275"
+    },
+    {
+      "query": "thanks. any idea on how do we duplicate assets?",
+      "timestamp": "2025-03-05T14:39:03.483476"
+    },
+    {
+      "query": "what can you tell me about relating any files?",
+      "timestamp": "2025-03-05T14:45:38.670295"
     }
   ]
 }

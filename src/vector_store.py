@@ -69,22 +69,19 @@ class VectorStore:
         
         return prepared_data
     
-    def _parse_metadata(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse metadata retrieved from storage by converting JSON strings back to Python objects"""
-        parsed_data = {}
+    def _parse_metadata(self, metadata):
+        """Parse metadata into a format suitable for ChromaDB"""
+        if not metadata:
+            return {}  # Return empty dict if metadata is None
+            
+        parsed = {}
         for key, value in metadata.items():
-            if isinstance(value, str):
-                try:
-                    # Try to parse as JSON
-                    parsed_value = json.loads(value)
-                    parsed_data[key] = parsed_value
-                except json.JSONDecodeError:
-                    # If not valid JSON, keep as is
-                    parsed_data[key] = value
+            # Convert all values to strings for ChromaDB
+            if isinstance(value, (list, dict)):
+                parsed[key] = json.dumps(value)
             else:
-                parsed_data[key] = value
-        
-        return parsed_data
+                parsed[key] = str(value)
+        return parsed
     
     def add_process(self, process_id: str, process_data: Dict[str, Any]) -> bool:
         """

@@ -61,30 +61,37 @@ class AIEngine:
         """
         query_lower = query.lower()
         
-        # Detect query intent to see if user is asking about Nav or Capability
-        navigation_intent = any(word in query_lower for word in [
-            "how to", "how do i", "where is", "navigate to", "go to", "find the", "access the"
-        ])
-        
-        capability_intent = any(word in query_lower for word in [
-            "what can", "what actions", "capabilities", "features", "options", "settings for", 
-            "what are", "what is available", "what do", "functions", "actions"
-        ])
+        # Clean up the query by removing common filler words
+        filler_words = [
+            "thanks", "thank you", "please", "any", "idea", "on", "how", "do", "we", "can", "you", "tell", "me",
+            "about", "the", "way", "to", "process", "of", "steps", "for", "help", "with"
+        ]
+        clean_query = " ".join([word for word in query_lower.split() if word not in filler_words])
         
         # Try vector similarity search first with adjusted thresholds
         try:
-            vector_results = search_processes_vector(query, top_k=3)
+            # Use both original and cleaned query for better matching
+            vector_results_original = search_processes_vector(query, top_k=3)
+            vector_results_clean = search_processes_vector(clean_query, top_k=3)
             
-            if vector_results and len(vector_results) > 0:
+            # Combine and deduplicate results
+            vector_results = []
+            seen_processes = set()
+            
+            for results in [vector_results_original, vector_results_clean]:
+                if results and len(results) > 0:
+                    for result in results:
+                        process_id = result['process_id']
+                        if process_id not in seen_processes:
+                            seen_processes.add(process_id)
+                            vector_results.append(result)
+            
+            if vector_results:
                 best_match = vector_results[0]['process_id']
                 similarity = vector_results[0]['similarity']
                 
                 # Lower threshold for better semantic matching
-                threshold = 0.65  # Reduced from 0.75
-                
-                # Higher threshold only for navigation processes when asking about capabilities
-                if "navigate_to" in best_match and capability_intent:
-                    threshold = 0.85
+                threshold = 0.65
                 
                 if similarity > threshold:
                     logger.info(f"Vector similarity match found: {best_match} with similarity {similarity}")
@@ -94,47 +101,33 @@ class AIEngine:
         except Exception as e:
             logger.error(f"Error in vector similarity search: {e}")
         
-        # Fall back to direct process name matching
-        for process_name in PROCESS_INSTRUCTIONS.keys():
-            if "navigate_to" in process_name:
-                process_pattern = re.compile(r'\b' + re.escape(process_name.replace('_', ' ')) + r'\b')
-                if process_pattern.search(query_lower):
-                    # For navigation processes, require navigation intent
-                    if navigation_intent and not capability_intent:
-                        logger.info(f"Navigation process match found: {process_name}")
-                        return process_name
-                    continue  # Skip this match if its a capability query
-            else:
-                # For non-navigation processes, just use the normal matching
-                process_pattern = re.compile(r'\b' + re.escape(process_name.replace('_', ' ')) + r'\b')
-                if process_pattern.search(query_lower):
-                    logger.info(f"Direct process match found: {process_name}")
-                    return process_name
-        
-        # Finally try keyword matches with intent awareness
+        # Try keyword matching with both original and cleaned query
         best_match = None
         highest_score = 0
         
         for process_name, keywords in self.process_keywords.items():
-            # Skip navigation processes for capability queries
-            if "navigate_to" in process_name and capability_intent:
-                continue
-                
             score = 0
-            for keyword in keywords:
-                if keyword.lower() in query_lower:  # Case-insensitive comparison
-                    # Higher score for exact matches
-                    if keyword.lower() == query_lower:
-                        score += 10
-                    # Higher score for multi-word matches
-                    else:
-                        score += len(keyword.split())
+            
+            # Check both original and cleaned query
+            for test_query in [query_lower, clean_query]:
+                for keyword in keywords:
+                    keyword_lower = keyword.lower()
+                    if keyword_lower in test_query:
+                        # Higher score for exact matches
+                        if keyword_lower == test_query:
+                            score += 10
+                        # Higher score for multi-word matches
+                        else:
+                            score += len(keyword.split())
+                    # Also check if query terms appear in keyword
+                    elif any(term in keyword_lower for term in test_query.split()):
+                        score += 0.5  # Partial match score
             
             if score > highest_score:
                 highest_score = score
                 best_match = process_name
         
-        if highest_score > 2:  # Increased threshold for keyword matches
+        if highest_score > 2:  # Keep threshold for keyword matches
             logger.info(f"Keyword match found: {best_match} with score {highest_score}")
             # Track successful match in analytics
             analytics.track_process_request(query, best_match)
@@ -166,36 +159,14 @@ class AIEngine:
             # Add user query to conversation history
             self.add_message("user", query)
             
-            # Check if user seems uncertain or needs guidance
-            is_uncertain = self._detect_uncertainty(query)
-            
             # Check if query matches any process
             matched_process = self._match_process(query)
-            process_guide = None
             
             # If we have a direct match to any process, use direct response method to ensure exact steps
             if matched_process:
                 logger.info(f"Using direct response for {matched_process} process")
                 
                 try:
-                    # Get the raw process steps
-                    process_steps = PROCESS_INSTRUCTIONS.get(matched_process, [])
-                    
-                    # Try to get the original file to access additional fields like troubleshooting
-                    # First determine which subdirectory it might be in
-                    # process_dirs = ["asset_management", "collection_management", "sharing_collaboration", "workflow_management"]
-                    # process_data = None
-                    
-                    # for subdir in process_dirs:
-                    #     try:
-                    #         process_file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
-                    #                                        'processes', subdir, f"{matched_process}.json")
-                    #         if os.path.exists(process_file_path):
-                    #             with open(process_file_path, 'r') as f:
-                    #                 process_data = json.load(f)
-                    #             break
-                    #     except Exception:
-                    #         continue
                     # Get the processes directory
                     processes_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'processes')
                     process_data = None
@@ -213,148 +184,22 @@ class AIEngine:
                                 logger.error(f"Error reading process file {process_file_path}: {e}")
                                 continue
                     
-                    # If we couldn't find or load the file, use just the steps
-                    if not process_data and isinstance(process_steps, list):
-                        process_data = {"steps": process_steps}
-                    
-                    # Format response based on the process data
-                    return self._format_direct_process_response(matched_process, process_data)
+                    # If we found and loaded the process file, use it
+                    if process_data:
+                        return self._format_direct_process_response(matched_process, process_data)
                     
                 except Exception as e:
                     logger.error(f"Error creating direct response for {matched_process}: {str(e)}")
-                    # Fall back to the normal response method
-                    process_guide = get_formatted_process_guide(matched_process)
             
-            # Continue with normal processing if direct response failed or if no process matched
-            if matched_process and not process_guide:
-                process_guide = get_formatted_process_guide(matched_process)
-                logger.info(f"Found matching process: {matched_process}")
+            # If we get here, we either didn't match a process or couldn't load the process file
+            return """I apologize, but I can only provide accurate information based on the documented processes in Brandworkz. 
             
-            # Prepare messages for API call
-            messages = [
-                {"role": "system", "content": """You are a friendly and helpful Brandworkz platform assistant named BrandwizAI. 
-                
-Your tone should be:
-- Warm and conversational, addressing the user as if you're having a friendly chat
-- Professional but not overly formal
-- Enthusiastic about helping users master the Brandworkz platform
-- Patient and encouraging, especially with new users
+Could you please rephrase your question? For example:
+- "How do I [specific task]?"
+- "What are the steps to [specific action]?"
+- "Can you show me how to [specific process]?"
 
-Your responses should be:
-- Detailed and comprehensive, providing thorough explanations
-- Well-structured with clear sections when appropriate
-- Practical with real-world examples where possible
-- Empathetic to user challenges and frustrations
-
-When explaining processes:
-- Break down complex tasks into manageable steps
-- Explain the reasoning behind each step
-- Mention potential pitfalls to avoid
-- Acknowledge when something might be challenging
-
-When users seem uncertain or don't know what to ask:
-- Proactively offer suggestions based on common Brandworkz tasks
-- Ask clarifying questions to understand their needs better
-- Provide a menu of options related to their area of interest
-- Suggest specific topics they might want to explore
-
-Always conclude your responses with 1-2 suggestions for what the user might want to do next. 
-Base these suggestions on what would naturally follow the user's current task. For example:
-- After explaining searching, suggest downloading or creating collections
-- After explaining uploading, suggest adding metadata or sharing
-- After explaining metadata, suggest searching using those metadata terms
-
-Available processes you can guide users through include:
-- upload_asset: How to upload assets to Brandworkz
-- search_asset: How to effectively search for assets
-- create_collection: How to create and manage collections
-- share_assets: How to share assets with others
-- download_assets: How to download assets from the platform
-- asset_workflow: How to set up and manage asset workflows
-- metadata_management: How to create and manage metadata for assets
-
-Your main goal is to guide users through Brandworkz processes with clarity and encouragement, making them feel supported and confident in using the platform."""}
-            ]
-            
-            # Add context if provided
-            if context:
-                context_text = json.dumps(context, indent=2)
-                messages.append({"role": "system", "content": f"Here is some context that might help with the query: {context_text}"})
-            
-            # If we matched a process, provide the guide
-            if process_guide:
-                friendly_process_name = matched_process.replace('_', ' ')
-                messages.append({"role": "system", "content": f"""The user is asking about the {friendly_process_name} process. 
-                
-Here is a detailed guide for this process. You MUST COPY THE STEPS VERBATIM without ANY changes:
-
-{process_guide}
-
-DO NOT REWRITE OR REINTERPRET ANY STEPS. When presenting these steps to the user:
-1. Use the EXACT same words, phrases, and sentences as written above for each step
-2. Maintain the exact same step numbering
-3. Do not add any of your own steps
-4. Do not combine or split steps
-5. Do not add additional explanations within the steps themselves
-6. You can add a title and intro, but the steps themselves MUST BE COPIED EXACTLY."""})
-            
-            # For uncertain users, add a specific instruction
-            if is_uncertain:
-                messages.append({"role": "system", "content": """The user seems uncertain about what to ask or how to proceed. 
-                
-In your response:
-1. Acknowledge their uncertainty
-2. Offer 3-5 specific suggestions for common Brandworkz tasks they might want to explore
-3. Provide a brief menu of general topics (e.g., asset management, searching, collections, sharing)
-4. Ask a follow-up question to help narrow down their interests
-                
-Make your suggestions specific rather than generic, and frame them as actionable options."""})
-            
-            # Add next step suggestions if not a direct process match
-            if not matched_process:
-                try:
-                    next_steps = self._suggest_next_steps(query)
-                    if next_steps:
-                        suggestions_text = []
-                        for step in next_steps:
-                            process_id = step['process_id']
-                            transition = step['transition']
-                            
-                            # Format process_id into a natural language question
-                            question = self._process_id_to_question(process_id)
-                                
-                            suggestions_text.append(f"- {process_id.replace('_', ' ').title()}: {transition} The user can ask \"How do I {question}?\"")
-                        
-                        formatted_suggestions = "\n".join(suggestions_text)
-                        
-                        messages.append({"role": "system", "content": f"""Based on the user's query, these might be good next steps to suggest:
-                        
-{formatted_suggestions}
-
-Include these suggestions towards the end of your response in a "What You Might Want to Try Next" section, phrasing them in a natural, conversational way."""})
-                except Exception as e:
-                    logger.error(f"Error adding next step suggestions to LLM prompt: {e}")
-            
-            # Add conversation history
-            messages.extend(self.conversation_history)
-            
-            # Call OpenAI API
-            response = self.client.chat.completions.create(
-                model="gpt-4o-mini",  # using a widely available model
-                messages=messages,
-                max_tokens=2000,
-                temperature=0.3
-            )
-            
-            response_text = response.choices[0].message.content
-            
-            # Format the response for better readability
-            response_text = self._format_response(response_text)
-            
-            # Add assistant response to history
-            self.add_message("assistant", response_text)
-            
-            return response_text
+This helps me find the exact process documentation you need."""
             
         except Exception as e:
             logger.error(f"Error generating response: {str(e)}")
@@ -459,105 +304,46 @@ Include these suggestions towards the end of your response in a "What You Might 
         # Return the mapped question or a default transformation
         return question_map.get(process_id, process_id.replace('_', ' '))
         
-    def _format_direct_process_response(self, process_name: str, process_data: Dict[str, Any]) -> str:
+    def _format_direct_process_response(self, process_id: str, process_data: Dict[str, Any]) -> str:
         """
-        Format a direct response for a process without using the LLM.
+        Format a response using process data from a JSON file.
         
         Args:
-            process_name: The name of the process
+            process_id: The ID of the process
             process_data: The process data from the JSON file
             
         Returns:
-            Formatted response text
+            Formatted response string
         """
-        # Get friendly process name
-        friendly_process_name = process_name.replace('_', ' ').title()
+        # Start with the title and description
+        response_parts = []
         
-        # Format the response
-        response_text = f"# How to {friendly_process_name}\n\n"
+        if "title" in process_data:
+            response_parts.append(f"# {process_data['title']}\n")
         
-        # Add description if available
-        if 'description' in process_data:
-            response_text += f"{process_data['description']}\n\n"
-        else:
-            response_text += f"I'm happy to guide you through the process of {process_name.replace('_', ' ')}. Follow these steps exactly:\n\n"
+        if "description" in process_data:
+            response_parts.append(f"{process_data['description']}\n")
         
-        # Add steps
-        steps = process_data.get('steps', [])
-        for i, step in enumerate(steps):
-            # Check if step is a dictionary with 'step' and 'detail' fields
-            if isinstance(step, dict) and 'step' in step:
-                step_text = step['step']
-                detail_text = step.get('detail', '')
-                response_text += f"**Step {i+1}:** {step_text}\n\n"
-                if detail_text:
-                    response_text += f"{detail_text}\n\n"
-            else:
-                # Handle simple string steps
-                response_text += f"**Step {i+1}:** {step}\n\n"
+        # Add steps section
+        if "steps" in process_data and process_data["steps"]:
+            response_parts.append("\n## Steps\n")
+            for i, step in enumerate(process_data["steps"], 1):
+                response_parts.append(f"{i}. {step}")
         
-        # Add additional sections based on available data
+        # Add troubleshooting section if present
+        if "troubleshooting" in process_data and process_data["troubleshooting"]:
+            response_parts.append("\n## Troubleshooting\n")
+            for issue in process_data["troubleshooting"]:
+                response_parts.append(f"- {issue}")
         
-        # Add troubleshooting if available
-        if 'troubleshooting' in process_data and process_data['troubleshooting']:
-            response_text += "## Potential Pitfalls to Avoid:\n\n"
-            for issue in process_data['troubleshooting']:
-                response_text += f"- {issue}\n"
-            response_text += "\n"
+        # Add tips section if present
+        if "tips" in process_data and process_data["tips"]:
+            response_parts.append("\n## Tips\n")
+            for tip in process_data["tips"]:
+                response_parts.append(f"- {tip}")
         
-        # Add tips if available
-        if 'tips' in process_data and process_data['tips']:
-            response_text += "## Helpful Tips:\n\n"
-            for tip in process_data['tips']:
-                response_text += f"- {tip}\n"
-            response_text += "\n"
-        
-        # Add prerequisites if available
-        if 'prerequisites' in process_data and process_data['prerequisites']:
-            response_text += "## Prerequisites:\n\n"
-            for prereq in process_data['prerequisites']:
-                response_text += f"- {prereq}\n"
-            response_text += "\n"
-        
-        # Add notes if available
-        if 'notes' in process_data and process_data['notes']:
-            response_text += "## Notes:\n\n"
-            if isinstance(process_data['notes'], list):
-                for note in process_data['notes']:
-                    response_text += f"- {note}\n"
-            else:
-                response_text += f"{process_data['notes']}\n"
-            response_text += "\n"
-        
-        # Add concluding text
-        response_text += "I hope this helps! Let me know if you have any questions about any of these steps.\n\n"
-        
-        # Add suggestions for next steps
-        try:
-            related_processes = self._suggest_next_steps(process_name, matched_process=process_name)
-            
-            if related_processes:
-                response_text += "## What You Might Want to Do Next:\n\n"
-                
-                for related in related_processes[:2]:  # Limit to 2 suggestions
-                    process_id = related["process_id"]
-                    transition = related["transition"]
-                    friendly_related_name = process_id.replace('_', ' ').title()
-                    
-                    # Format process_id into a natural language question
-                    question = self._process_id_to_question(process_id)
-                    
-                    response_text += f"- **{friendly_related_name}**: {transition} Just ask me \"How do I {question}?\"\n"
-                
-                response_text += "\n"
-        except Exception as e:
-            logger.error(f"Error suggesting next steps: {e}")
-            # Continue without suggestions if there's an error
-        
-        # Add to conversation history
-        self.add_message("assistant", response_text)
-        
-        return response_text
+        # Join all parts with newlines
+        return "\n".join(response_parts)
     
     def get_process_instructions(self, process_name: str) -> Optional[List[str]]:
         """
