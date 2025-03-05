@@ -1,0 +1,41 @@
+{
+    "title": "Use Shortcuts",
+    "description": "How to use shortcuts in Brandworkz to reduce metadata management time and ensure a single source of truth for assets",
+    "keywords": [
+        "shortcuts",
+        "asset shortcuts",
+        "create shortcuts",
+        "use shortcuts",
+        "manage shortcuts",
+        "file references",
+        "linked assets",
+        "asset references",
+        "duplicate management",
+        "metadata management",
+        "single source of truth",
+        "file organization",
+        "deduplication"
+    ],
+    "steps": [
+        "Identify shortcuts in the system by looking for the arrow icon in the bottom left corner of the asset thumbnail.",
+        "View the path to the original asset by opening the shortcut in the Full Screen Asset Preview (FSAP).",
+        "Shortcuts can be created automatically when you upload an identical asset with deduplication turned on - you'll see a warning message during upload.",
+        "To manually create shortcuts from the Side Bar: Add assets to the Side Bar, navigate to the destination folder, and select 'Create Shortcut' from the options menu.",
+        "To create shortcuts using the Move Button: Select the asset, click the Move button, choose the destination folder, and select the 'Create a shortcut' option.",
+        "When editing a shortcut, you'll automatically be redirected to the original asset since metadata is controlled by the original.",
+        "Note that only metadata fields that exist in both the original asset's metaset and the shortcut folder's metaset will be visible in the shortcut."
+    ],
+    "troubleshooting": [
+        "If you can't see the shortcut arrow icon, ensure your view settings show thumbnails at an appropriate size.",
+        "If you're unable to create shortcuts, check that you have sufficient permissions for both source and destination folders.",
+        "When metadata fields aren't appearing in shortcuts, verify that the fields exist in both the original asset's metaset and the shortcut folder's metaset.",
+        "If automatic deduplication isn't creating shortcuts, check with your administrator that the deduplication feature is enabled."
+    ],
+    "tips": [
+        "Use shortcuts to maintain consistent metadata across multiple instances of the same asset throughout your DAM.",
+        "When organizing assets across multiple categories or departments, shortcuts allow the same asset to appear in multiple locations without duplicating storage.",
+        "Remember that updating metadata on the original asset will automatically update all shortcuts.",
+        "For example, if an original asset has a 'Master' metaset with both UK and US Product Codes, but a shortcut is in a folder with only UK Product Code metadata, only the UK field will be visible in the shortcut.",
+        "Shortcuts are particularly useful for frequently used assets that need to appear in multiple contexts while maintaining consistent information."
+    ]
+} 

@@ -71,7 +71,30 @@ class AIEngine:
             "what are", "what is available", "what do", "functions", "actions"
         ])
         
-        # For navigation processes, only match if theres a clear navigation intent
+        # Try vector similarity search first with adjusted thresholds
+        try:
+            vector_results = search_processes_vector(query, top_k=3)
+            
+            if vector_results and len(vector_results) > 0:
+                best_match = vector_results[0]['process_id']
+                similarity = vector_results[0]['similarity']
+                
+                # Lower threshold for better semantic matching
+                threshold = 0.65  # Reduced from 0.75
+                
+                # Higher threshold only for navigation processes when asking about capabilities
+                if "navigate_to" in best_match and capability_intent:
+                    threshold = 0.85
+                
+                if similarity > threshold:
+                    logger.info(f"Vector similarity match found: {best_match} with similarity {similarity}")
+                    # Track successful match in analytics
+                    analytics.track_process_request(query, best_match)
+                    return best_match
+        except Exception as e:
+            logger.error(f"Error in vector similarity search: {e}")
+        
+        # Fall back to direct process name matching
         for process_name in PROCESS_INSTRUCTIONS.keys():
             if "navigate_to" in process_name:
                 process_pattern = re.compile(r'\b' + re.escape(process_name.replace('_', ' ')) + r'\b')
@@ -82,33 +105,13 @@ class AIEngine:
                         return process_name
                     continue  # Skip this match if its a capability query
             else:
-                # For non-navigation processes, just use the normal matching.. lets not complicate things
+                # For non-navigation processes, just use the normal matching
                 process_pattern = re.compile(r'\b' + re.escape(process_name.replace('_', ' ')) + r'\b')
                 if process_pattern.search(query_lower):
                     logger.info(f"Direct process match found: {process_name}")
                     return process_name
         
-        # Try vector similarity search with adjusted thresholds
-        try:
-            vector_results = search_processes_vector(query, top_k=1)
-            
-            if vector_results and len(vector_results) > 0:
-                best_match = vector_results[0]['process_id']
-                similarity = vector_results[0]['similarity']
-                
-                # Higher threshold for navigation processes when asking about capabilities
-                if "navigate_to" in best_match and capability_intent:
-                    threshold = 0.9  # Very high threshold for navigation matches on capability queries
-                else:
-                    threshold = 0.75  # Normal threshold for other cases
-                
-                if similarity > threshold:
-                    logger.info(f"Vector similarity match found: {best_match} with similarity {similarity}")
-                    return best_match
-        except Exception as e:
-            logger.error(f"Error in vector similarity search: {e}")
-        
-        # Fall back to keyword matches with intent awareness
+        # Finally try keyword matches with intent awareness
         best_match = None
         highest_score = 0
         
@@ -119,15 +122,19 @@ class AIEngine:
                 
             score = 0
             for keyword in keywords:
-                if keyword in query_lower:
+                if keyword.lower() in query_lower:  # Case-insensitive comparison
+                    # Higher score for exact matches
+                    if keyword.lower() == query_lower:
+                        score += 10
                     # Higher score for multi-word matches
-                    score += len(keyword.split())
+                    else:
+                        score += len(keyword.split())
             
             if score > highest_score:
                 highest_score = score
                 best_match = process_name
         
-        if highest_score > 0:
+        if highest_score > 2:  # Increased threshold for keyword matches
             logger.info(f"Keyword match found: {best_match} with score {highest_score}")
             # Track successful match in analytics
             analytics.track_process_request(query, best_match)
@@ -176,19 +183,35 @@ class AIEngine:
                     
                     # Try to get the original file to access additional fields like troubleshooting
                     # First determine which subdirectory it might be in
-                    process_dirs = ["asset_management", "collection_management", "sharing_collaboration", "workflow_management"]
-                    process_data = None
+                    # process_dirs = ["asset_management", "collection_management", "sharing_collaboration", "workflow_management"]
+                    # process_data = None
                     
-                    for subdir in process_dirs:
-                        try:
-                            process_file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
-                                                           'processes', subdir, f"{matched_process}.json")
-                            if os.path.exists(process_file_path):
+                    # for subdir in process_dirs:
+                    #     try:
+                    #         process_file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
+                    #                                        'processes', subdir, f"{matched_process}.json")
+                    #         if os.path.exists(process_file_path):
+                    #             with open(process_file_path, 'r') as f:
+                    #                 process_data = json.load(f)
+                    #             break
+                    #     except Exception:
+                    #         continue
+                    # Get the processes directory
+                    processes_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'processes')
+                    process_data = None
+
+                    # Search for the process file in all subdirectories
+                    for root, dirs, files in os.walk(processes_dir):
+                        process_file_path = os.path.join(root, f"{matched_process}.json")
+                        if os.path.exists(process_file_path):
+                            try:
                                 with open(process_file_path, 'r') as f:
                                     process_data = json.load(f)
+                                logger.info(f"Found process file at {process_file_path}")
                                 break
-                        except Exception:
-                            continue
+                            except Exception as e:
+                                logger.error(f"Error reading process file {process_file_path}: {e}")
+                                continue
                     
                     # If we couldn't find or load the file, use just the steps
                     if not process_data and isinstance(process_steps, list):

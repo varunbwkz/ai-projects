@@ -126,9 +126,15 @@ def load_processes_from_files():
                 if not success:
                     logger.warning(f"Failed to add process {process_name} to vector store, generating in-memory embedding instead")
                     # Fall back to in-memory embedding
-                    embedding_text = process_data.get('title', '') + ' ' + process_data.get('description', '')
+                    embedding_text = process_data.get('title', '')
+                    if 'description' in process_data:
+                        embedding_text += ' ' + process_data['description']
                     if 'keywords' in process_data:
-                        embedding_text += ' ' + ' '.join(process_data['keywords'])
+                        # Add each keyword multiple times to increase its weight
+                        embedding_text += ' ' + ' '.join(process_data['keywords'] * 3)
+                    # Add first few steps to provide more context
+                    if 'steps' in process_data and process_data['steps']:
+                        embedding_text += ' ' + ' '.join(process_data['steps'][:3])
                     
                     if embedding_text:
                         embedding = generate_embedding(embedding_text)
@@ -136,9 +142,15 @@ def load_processes_from_files():
                             PROCESS_EMBEDDINGS[process_name] = embedding
             else:
                 # Generate and store embedding for in-memory approach
-                embedding_text = process_data.get('title', '') + ' ' + process_data.get('description', '')
+                embedding_text = process_data.get('title', '')
+                if 'description' in process_data:
+                    embedding_text += ' ' + process_data['description']
                 if 'keywords' in process_data:
-                    embedding_text += ' ' + ' '.join(process_data['keywords'])
+                    # Add each keyword multiple times to increase its weight
+                    embedding_text += ' ' + ' '.join(process_data['keywords'] * 3)
+                # Add first few steps to provide more context
+                if 'steps' in process_data and process_data['steps']:
+                    embedding_text += ' ' + ' '.join(process_data['steps'][:3])
                 
                 if embedding_text:
                     embedding = generate_embedding(embedding_text)

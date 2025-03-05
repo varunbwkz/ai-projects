@@ -1,0 +1,38 @@
+{
+    "title": "Relate Assets",
+    "description": "How to create relationships between assets in Brandworkz to show how they should be used together",
+    "keywords": [
+        "relate assets",
+        "link assets",
+        "asset relationships",
+        "connected assets",
+        "associated files",
+        "asset connections",
+        "related content",
+        "file relationships",
+        "asset linking",
+        "content relationships"
+    ],
+    "steps": [
+        "Add the assets you want to relate to the Side Bar by selecting them and clicking 'Add to Sidebar' in the action toolbar.",
+        "Navigate to and click on the asset in the DAM page that you want to relate these assets to.",
+        "Click the relate icon to establish the relationship.",
+        "The assets in the Side Bar will now be related to the selected asset in the DAM (marked in grey).",
+        "Note that the assets in the Side Bar will not automatically be linked to each other, only to the selected asset.",
+        "When assets are related, they will appear as such in the FSAP (Full Screen Asset Preview).",
+        "This helps users understand how assets should be used together, such as which logo should be used with an image or if a consent form has been supplied for an image."
+    ],
+    "troubleshooting": [
+        "If the relate icon is not visible, you may not have sufficient permissions to create asset relationships.",
+        "Ensure you have added the correct assets to the Side Bar before attempting to create relationships.",
+        "If you accidentally create an incorrect relationship, you can remove it by accessing the asset's details and removing the relationship.",
+        "Remember that relationships are directional - assets in the Side Bar are related to the selected asset, but not necessarily vice versa."
+    ],
+    "tips": [
+        "To relate assets in the same folder: Add all assets to the Side Bar, select the main asset in the DAM, and click the relate icon.",
+        "To relate multiple assets from different folders: First relate all assets in the same folder together, then keep these in the Side Bar, navigate to the second folder, select all needed assets, and click relate.",
+        "For complex relationships between many assets across multiple folders, repeat the process as required.",
+        "Consider creating meaningful relationships that help users understand content connections, such as linking logos with approved images or connecting consent forms with their corresponding assets.",
+        "Use asset relationships to build a network of connected content that improves discoverability and proper usage of your brand assets."
+    ]
+}

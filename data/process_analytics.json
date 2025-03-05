@@ -21,16 +21,122 @@
           "timestamp": "2025-03-05T10:42:36.102432"
         }
       ]
+    },
+    "new_asset_folder": {
+      "count": 1,
+      "queries": [
+        {
+          "query": "how can i create a new folder?",
+          "timestamp": "2025-03-05T13:52:03.445341"
+        }
+      ]
+    },
+    "create_use_shortcuts": {
+      "count": 4,
+      "queries": [
+        {
+          "query": "What are shortcuts and how do i create them?",
+          "timestamp": "2025-03-05T14:01:08.520613"
+        },
+        {
+          "query": "how to create shortcuts?",
+          "timestamp": "2025-03-05T14:01:51.997703"
+        },
+        {
+          "query": "How can i manage shortcuts?",
+          "timestamp": "2025-03-05T14:07:19.172126"
+        },
+        {
+          "query": "where can i use shortcuts?",
+          "timestamp": "2025-03-05T14:07:47.480249"
+        }
+      ]
+    },
+    "initiate_approval": {
+      "count": 2,
+      "queries": [
+        {
+          "query": "how can i preview files?",
+          "timestamp": "2025-03-05T14:08:03.765394"
+        },
+        {
+          "query": "how can i preview assets?",
+          "timestamp": "2025-03-05T14:08:13.428064"
+        }
+      ]
+    },
+    "asset_previews": {
+      "count": 1,
+      "queries": [
+        {
+          "query": "Where cani preview files?",
+          "timestamp": "2025-03-05T14:15:19.738870"
+        }
+      ]
+    },
+    "manage_assets": {
+      "count": 1,
+      "queries": [
+        {
+          "query": "i need to know some way to manage the assets that i have",
+          "timestamp": "2025-03-05T14:16:30.031531"
+        }
+      ]
+    },
+    "move_asset": {
+      "count": 1,
+      "queries": [
+        {
+          "query": "any idea on how to move various assets around the site?",
+          "timestamp": "2025-03-05T14:18:06.355506"
+        }
+      ]
+    },
+    "export_metadata": {
+      "count": 1,
+      "queries": [
+        {
+          "query": "ah but i wanted to know how to export metadata and tagss and all that",
+          "timestamp": "2025-03-05T14:19:00.996225"
+        }
+      ]
+    },
+    "delete_asset": {
+      "count": 1,
+      "queries": [
+        {
+          "query": "how to remove any assets from my site?",
+          "timestamp": "2025-03-05T14:20:53.568314"
+        }
+      ]
+    },
+    "download_forms": {
+      "count": 1,
+      "queries": [
+        {
+          "query": "so can i download or create new forms?",
+          "timestamp": "2025-03-05T14:21:45.547300"
+        }
+      ]
     }
   },
   "daily_stats": {
     "2025-03-05": {
-      "total_requests": 7,
-      "matched_requests": 3,
-      "unmatched_requests": 4,
+      "total_requests": 27,
+      "matched_requests": 16,
+      "unmatched_requests": 11,
       "processes": {
         "tag_edit_asset": 2,
-        "metadata_management": 1
+        "metadata_management": 1,
+        "new_asset_folder": 1,
+        "create_use_shortcuts": 4,
+        "initiate_approval": 2,
+        "asset_previews": 1,
+        "manage_assets": 1,
+        "move_asset": 1,
+        "export_metadata": 1,
+        "delete_asset": 1,
+        "download_forms": 1
       }
     }
   },
@@ -50,6 +156,34 @@
     {
       "query": "so can i modify the tag for any asset?",
       "timestamp": "2025-03-05T10:42:57.915272"
+    },
+    {
+      "query": "hello how can i create a foldeR?",
+      "timestamp": "2025-03-05T13:49:01.337790"
+    },
+    {
+      "query": "where do i store my assets?",
+      "timestamp": "2025-03-05T13:53:07.053075"
+    },
+    {
+      "query": "what about tags and fsap?",
+      "timestamp": "2025-03-05T14:15:34.358193"
+    },
+    {
+      "query": "where in my system can i store assets?",
+      "timestamp": "2025-03-05T14:16:43.267339"
+    },
+    {
+      "query": "so how can i make new folders and where?",
+      "timestamp": "2025-03-05T14:17:08.476954"
+    },
+    {
+      "query": "and what about exports and all that?",
+      "timestamp": "2025-03-05T14:18:21.162302"
+    },
+    {
+      "query": "what are forms and what can i do with them?",
+      "timestamp": "2025-03-05T14:21:11.905096"
     }
   ]
 }

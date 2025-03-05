@@ -1,0 +1,38 @@
+{
+    "title": "Copy and Paste Assets",
+    "description": "How to copy assets from one folder and paste them into another folder in Brandworkz",
+    "keywords": [
+        "copy assets",
+        "paste assets",
+        "move assets",
+        "duplicate assets",
+        "transfer assets",
+        "relocate assets",
+        "copy files",
+        "paste files",
+        "asset management",
+        "file organization"
+    ],
+    "steps": [
+        "Select the assets you want to copy by clicking on them (use Ctrl/Cmd+click for multiple selections).",
+        "Click 'Add to Sidebar' in the action toolbar to add the selected assets to your sidebar.",
+        "Navigate to the destination folder where you want to paste the assets.",
+        "In the sidebar, select the assets you want to paste.",
+        "Click the three dots menu (...) to see available options.",
+        "Choose either 'Copy' to create duplicates or 'Create Shortcut' to create references to the original assets.",
+        "If you selected 'Copy', the system will create complete duplicates with their own metadata.",
+        "If you selected 'Create Shortcut', the system will create references that share metadata with the original assets."
+    ],
+    "troubleshooting": [
+        "If the copy/paste options are grayed out, you may not have sufficient permissions for the destination folder.",
+        "If you're unable to select multiple assets, try using Ctrl/Cmd+click or Shift+click for range selection.",
+        "When copying large assets, the process may take some time to complete.",
+        "If you encounter errors during copying, check that you have sufficient storage quota in your account."
+    ],
+    "tips": [
+        "Use 'Create Shortcut' instead of 'Copy' when you want the same asset to appear in multiple locations without duplicating storage.",
+        "Creating shortcuts is more efficient for metadata management as changes to the original asset's metadata will reflect in all shortcuts.",
+        "When copying assets, consider whether you need completely separate copies with independent metadata.",
+        "For organizational purposes, shortcuts are visually indicated in the interface to distinguish them from original assets."
+    ]
+} 

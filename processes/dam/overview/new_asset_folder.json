@@ -1,0 +1,43 @@
+{
+    "title": "Create a New Asset Folder",
+    "description": "A guide to creating new folders within standard asset folders in Brandworkz",
+    "keywords": [
+        "new folder",
+        "create folder",
+        "asset folder",
+        "DAM folder",
+        "organize assets",
+        "folder management",
+        "folder creation",
+        "subfolder",
+        "folder structure",
+        "asset organization"
+    ],
+    "steps": [
+        "Navigate to the location where you want to create a new folder.",
+        "Click the 'Create New Folder' button in the Action Toolbar at the top of the screen.",
+        "Fill in the required 'Name' field (this is what users will see in the DAM).",
+        "Select the appropriate 'Metaset' from the dropdown which determines what metadata fields will be available for assets in this folder.",
+        "Add an optional 'Description' to help users understand the folder's purpose.",
+        "For pages such as the Showcase Accordion, fill in any custom metadata fields that appear in the Custom Metadata section.",
+        "Under Advanced Options, you can add search keywords to make the folder easier to find.",
+        "You can also configure sorting of children to determine how assets within the folder will be displayed.",
+        "Set a publish date if you want the folder to become visible at a specific time.",
+        "Choose visibility settings to control who can access the folder (All users or System Admins only).",
+        "Alternatively, you can create a DAM Folder via the Page Admin Bar by clicking '+ Add' and selecting 'DAM Folder'."
+    ],
+    "troubleshooting": [
+        "If you don't see the 'Create New Folder' button, you may not have permission to create folders in this location.",
+        "If you need to modify folder permissions, contact your system administrator.",
+        "Folders can only be created within standard asset folders, not within smart folders or collections.",
+        "If you're trying to create a folder for a specific project, consider using Collections instead for temporary groupings.",
+        "Custom metadata fields vary depending on your organization's configuration."
+    ],
+    "tips": [
+        "Use a consistent naming convention for folders to maintain a clean, organized DAM.",
+        "Keep folder structures shallow where possible to minimize the number of clicks needed to find assets.",
+        "Consider adding clear descriptions to folders to help users understand what they contain.",
+        "Review folder permissions regularly to ensure the right people have access to the right content.",
+        "Using the Page Admin Bar method may provide additional configuration options depending on your system setup."
+    ]
+} 
